@@ -1,6 +1,25 @@
 
 const Blog = require('../model/Blogs');
 
+async function displayAllTasks(req, res) {
+
+    // query blogs 
+    try {
+      const allTasks = await tasks.find({});
+    } catch (error) {
+        console.log(error);
+    }
+    res.json({
+        success: true,
+        allTasks: tasks
+
+    })
+    return 
+}
+
+
+
+
 async function getAllBlogs(req, res) {
 
     //query blogs 
@@ -101,5 +120,6 @@ module.exports = {
     deleteOneBlog,
     getAllBlogs,
     getOneBlog,
-    updateOneBlog
+    updateOneBlog,
+    displayAllTasks
 };
