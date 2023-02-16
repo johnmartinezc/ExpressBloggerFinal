@@ -17,6 +17,7 @@ var blogsRouter = require('./routes/blogs');
 var { mongoConnect } = require('./mongo.js');
 mongoConnect();
 
+var PORT = process.env.PORT || 3000;
 var app = express();
 
 // view engine setup
@@ -53,5 +54,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+app.listen(PORT,()=>{
+  console.log(`Server is running on port ${PORT}`);
+
+})
 
 module.exports = app;

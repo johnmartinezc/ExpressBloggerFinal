@@ -1,5 +1,5 @@
 
-const Blog = require('../models/Blogs');
+const Blog = require('../model/Blogs');
 
 async function getAllBlogs(req, res) {
 
