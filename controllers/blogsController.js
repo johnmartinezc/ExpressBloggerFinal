@@ -1,24 +1,6 @@
 
-const Blog = require('../model/Blogs');
 
-async function displayAllTasks(req, res) {
-
-    // query blogs 
-    try {
-      const allTasks = await tasks.find({});
-    } catch (error) {
-        console.log(error);
-    }
-    res.json({
-        success: true,
-        allTasks: tasks
-
-    })
-    return 
-}
-
-
-
+const Blog = require('../models/Blogs');
 
 async function getAllBlogs(req, res) {
 
@@ -37,8 +19,8 @@ async function createOneBlog(req, res) {
       const title  = req.body.title 
       const text = req.body.text 
       const author = req.body.author
-      const categories = req.body.category
-      const year =  req.body.year;
+      const categories = req.body.categories.split(",")
+      const year =  Number(req.body.year);
   
       //pass fields to new Blog model 
       //notice how it's way more organized and does the type checking for us
@@ -70,11 +52,13 @@ async function createOneBlog(req, res) {
 
 async function getOneBlog(req, res, next) {
 
+    console.log(req.params)
 
     let oneBlogPost;
 
     try {
-        oneBlogPost = await Blog.findOne({id: req.params.id});
+        oneBlogPost = await Blog.findOne({_id: req.params.id});
+        console.log(oneBlogPost);
     } catch (error) {
         console.log(error);
     }
@@ -88,7 +72,7 @@ async function updateOneBlog(req,res){
     const entryId = req.params.id;
 
     try {
-        await Blog.updateOne({ id: entryId }, req.body);
+        await Blog.updateOne({ _id: entryId }, req.body);
     } catch (err) {
         console.log(err);
         throw err;  
@@ -101,17 +85,15 @@ async function updateOneBlog(req,res){
 
 async function deleteOneBlog(req,res){
     const entryId = req.params.id;
-
     try {
-        await Blog.deleteOne({id: entryId});
+        await Blog.deleteOne({_id: entryId});
     } catch (err) {
         console.log(err);
         throw err;  
     }
 
     res.json({
-        success: true,
-        message: `blog entry id ${entryId} deleted`
+        success: true
     })
 }
 
@@ -120,6 +102,5 @@ module.exports = {
     deleteOneBlog,
     getAllBlogs,
     getOneBlog,
-    updateOneBlog,
-    displayAllTasks
+    updateOneBlog
 };
